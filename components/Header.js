@@ -1,12 +1,9 @@
 "use client";
 
 import {
-  faArrowAltCircleLeft,
-  faCubes,
-  faGear,
+  faCartShopping,
   faHome,
   faList,
-  faListDots,
   faMugHot,
   faRightFromBracket,
   faX,
@@ -22,9 +19,9 @@ const Navbar = () => {
   const pathname = usePathname();
   const [flexNav, setFlexNav] = useState(false);
   const activeLink =
-    "bg-blue-300 max-[1024px]:mb-4 px-3 py-1 rounded-xl shadow-xl shadow-gray-400 ";
+    "bg-blue-300 max-[1024px]:mb-4 px-3 py-1 rounded-xl shadow-xl shadow-gray-300 min-[1025px]:mx-4";
   const unactiveLink =
-    "hover:bg-blue-300 max-[1024px]:mb-4 px-3 py-1 rounded-xl";
+    "hover:bg-blue-300 max-[1024px]:mb-4 px-3 py-1 rounded-xl min-[1025px]:mx-4";
   const hideButton =
     "fixed bg-white text-[30px] top-4 right-4 shadow-xl rounded-full border py-1 px-4 min-[1025px]:hidden";
   const showButton =
@@ -51,7 +48,7 @@ const Navbar = () => {
         </button>
         <nav className={flexNav ? cssShowNav : cssHideNav}>
           <div className="max-[1024px]:mb-4 px-3 py-2 h-fit">
-            <h1 className="font-logo ">NAMMOB'S COFFEE</h1>
+            <h1 className="font-logo text-center">NAMMOB'S COFFEE</h1>
           </div>
           <div className="max-[1024px]:flex max-[1024px]:flex-col max-[1024px]:min-h-screen max-[1024px]:mt-10 text-center inline-block">
             <Link
@@ -60,8 +57,8 @@ const Navbar = () => {
                 pathname == "/" ? `${activeLink} ` : `${unactiveLink} `
               }
             >
-              {flexNav && <FontAwesomeIcon icon={faList} />}
-              <span className="text-[20px] leading-5 ml-2 font-welcome">
+              {flexNav && <FontAwesomeIcon icon={faHome} />}
+              <span className="text-[20px] leading-5 max-[1024px]:ml-2 font-welcome">
                 Trang chủ
               </span>
             </Link>
@@ -71,20 +68,9 @@ const Navbar = () => {
                 pathname == "/product" ? `${activeLink}` : `${unactiveLink}`
               }
             >
-              {flexNav && <FontAwesomeIcon icon={faList} />}
-              <span className="text-[20px] leading-5 ml-2 font-welcome">
+              {flexNav && <FontAwesomeIcon icon={faMugHot} />}
+              <span className="text-[20px] leading-5 max-[1024px]:ml-2 font-welcome">
                 Sản phẩm
-              </span>
-            </Link>
-            <Link
-              href="/account"
-              className={
-                pathname == "/account" ? `${activeLink}` : `${unactiveLink}`
-              }
-            >
-              {flexNav && <FontAwesomeIcon icon={faList} />}
-              <span className="text-[20px] leading-5 ml-2 font-welcome">
-                Tài khoản
               </span>
             </Link>
             <Link
@@ -93,24 +79,11 @@ const Navbar = () => {
                 pathname == "/order" ? `${activeLink}` : `${unactiveLink}`
               }
             >
-              {flexNav && <FontAwesomeIcon icon={faList} />}
-              <span className="text-[20px] leading-5 text-center ml-2 font-welcome">
+              {flexNav && <FontAwesomeIcon icon={faCartShopping} />}
+              <span className="text-[20px] leading-5 text-center max-[1024px]:ml-2 font-welcome">
                 Đơn hàng {cartProducts.length}
               </span>
             </Link>
-            <button
-              className={`${unactiveLink} max-[1024px]:w-full text-left max-[1024px]:absolute max-[1024px]:bottom-[150px]`}
-              onClick={() => {
-                signOut({ callbackUrl: "/" });
-              }}
-            >
-              {flexNav && (
-                <FontAwesomeIcon icon={faRightFromBracket} flip="horizontal" />
-              )}
-              <span className="text-[20px] leading-5 ml-2 font-welcome">
-                Logout
-              </span>
-            </button>
           </div>
         </nav>
       </header>

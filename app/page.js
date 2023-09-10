@@ -2,29 +2,16 @@
 
 import { Content, Footer, Header, Landing } from "@/components";
 import axios from "axios";
-
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [productDatas, setProductDatas] = useState([]);
-  const [updatedDatas, setUpdateDatas] = useState(true);
 
-  const fetch = () => {
+  useEffect(() => {
     axios
-      .get("/api/products")
+      .get("/api/contents")
       .then((response) => setProductDatas(response.data));
-  };
-
-  useEffect(() => {
-    fetch();
   }, []);
-
-  useEffect(() => {
-    if (updatedDatas) {
-      fetch();
-      setUpdateDatas(false);
-    }
-  }, [updatedDatas]);
 
   return (
     <main className="bg-slate-200">

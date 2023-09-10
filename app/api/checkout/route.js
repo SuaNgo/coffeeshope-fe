@@ -17,6 +17,7 @@ export async function POST(request) {
     streetAddress,
     country,
     cartProducts,
+    cartProp,
   } = res;
 
   const productsIds = cartProducts;
@@ -32,10 +33,15 @@ export async function POST(request) {
     if (quantity > 0 && productInfo) {
       line_items.push({
         quantity,
+
         price_data: {
-          currency: "USD",
-          product_data: { name: productInfo.product },
-          unit_amount: quantity * productInfo.price * 100,
+          currency: "VND",
+          product_data: {
+            name: productInfo.product,
+            description: cartProp.toString(),
+          },
+
+          unit_amount: productInfo.price,
         },
       });
     }
@@ -56,9 +62,12 @@ export async function POST(request) {
     line_items,
     mode: "payment",
     customer_email: email,
-    success_url: process.env.PUBLIC_URL + "/cart?success=1",
-    cancel_url: process.env.PUBLIC_URL + "/cart?canceled=1",
-    metadata: { orderId: orderDoc._id.toString(), test: "ok" },
+    success_url: process.env.PUBLIC_URL + "/order?success=1",
+    cancel_url: process.env.PUBLIC_URL + "/order?canceled=1",
+    metadata: {
+      orderId: orderDoc._id.toString(),
+      test: "ok",
+    },
   });
 
   return NextResponse.json({

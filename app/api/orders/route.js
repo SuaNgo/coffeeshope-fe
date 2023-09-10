@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   await mongooseConnect();
-  const ids = request.body.ids;
+  const res = await request.json();
+  const { ids } = res;
   return NextResponse.json(await Product.find({ _id: ids }));
 }

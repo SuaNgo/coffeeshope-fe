@@ -7,11 +7,7 @@ import { NextResponse } from "next/server";
 export async function GET(request) {
   await mongooseConnect();
 
-  const url = new URL(request.url);
-  if (url.searchParams.get("id")) {
-    return NextResponse.json(
-      await Product.findById(url.searchParams.get("id"))
-    );
-  }
-  return NextResponse.json(await Product.find({}));
+  return NextResponse.json(
+    await Product.find({}, null, { sort: { _id: -1 }, limit: 5 })
+  );
 }
