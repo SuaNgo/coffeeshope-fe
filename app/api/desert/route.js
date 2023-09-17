@@ -6,8 +6,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(request) {
   await mongooseConnect();
-
+  const url = new URL(request.url);
   return NextResponse.json(
-    await Product.find({ discount: { $exists: true, $ne: null } })
+    await Product.find({ category: url.searchParams.get("id") }).limit(2)
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Footer, Header, Landing } from "@/components";
-import AllProducts from "@/components/AllProducts";
+
 import CatProducts from "@/components/CatProducts";
 import CustomFilter from "@/components/CustomFilter";
 import SearchBar from "@/components/SearchBar";
@@ -11,8 +11,7 @@ import { useEffect, useState } from "react";
 const ProductPage = () => {
   const [productDatas, setProductDatas] = useState([]);
   const [filter, setFilter] = useState([]);
-  const idCat = "64f3485e347e9326423be33c";
-
+  const idCat = "64f348d3347e9326423be344";
   const page = "/api/products?idCat=";
   useEffect(() => {
     axios
@@ -28,9 +27,8 @@ const ProductPage = () => {
         setFilter(props);
       });
   }, []);
-
   return (
-    <main className="">
+    <main>
       <Header />
       <Landing />
       <SearchBar setProductDatas={setProductDatas} page={page} id={idCat} />
@@ -39,7 +37,7 @@ const ProductPage = () => {
           setProductDatas={setProductDatas}
           filter={filter}
           id={idCat}
-          data="caphe"
+          data="maycaphe"
         />
         <CatProducts products={productDatas} />
       </div>

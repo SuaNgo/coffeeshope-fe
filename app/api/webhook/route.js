@@ -22,7 +22,6 @@ export async function POST(request) {
     );
   }
 
-  console.log(event);
   //Handle the event
   switch (event.type) {
     case "checkout.session.completed":

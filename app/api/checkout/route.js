@@ -16,11 +16,12 @@ export async function POST(request) {
     postalCode,
     streetAddress,
     country,
-    cartProducts,
+    ids,
     cartProp,
+    total,
   } = res;
 
-  const productsIds = cartProducts;
+  const productsIds = ids;
   const uniqueIds = [...new Set(productsIds)];
   const productsInfos = await Product.find({ _id: uniqueIds });
 
@@ -29,7 +30,8 @@ export async function POST(request) {
     const productInfo = productsInfos.find(
       (p) => p._id.toString() === productId
     );
-    const quantity = productsIds.filter((id) => id === productId)?.length || 0;
+
+    const quantity = 1;
     if (quantity > 0 && productInfo) {
       line_items.push({
         quantity,
@@ -41,7 +43,7 @@ export async function POST(request) {
             description: cartProp.toString(),
           },
 
-          unit_amount: productInfo.price,
+          unit_amount: total,
         },
       });
     }

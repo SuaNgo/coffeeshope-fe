@@ -6,7 +6,6 @@ export const CartContext = createContext({});
 export function CartContextProvider({ children }) {
   const ls = typeof window !== "undefined" ? window.localStorage : null;
   const [cartProducts, setCartProducts] = useState([]);
-  const [cartProp, setCartProp] = useState(null);
   useEffect(() => {
     if (cartProducts?.length > 0) {
       ls?.setItem("cart", JSON.stringify(cartProducts));
@@ -17,32 +16,29 @@ export function CartContextProvider({ children }) {
       setCartProducts(JSON.parse(ls.getItem("cart")));
     }
   }, []);
-  useEffect(() => {
-    if (cartProp?.length > 0) {
-      ls?.setItem("prop", JSON.stringify(cartProp));
-    }
-  }, [cartProp]);
-  useEffect(() => {
-    if (ls && ls.getItem("prop")) {
-      setCartProp(JSON.parse(ls.getItem("prop")));
-    }
-  }, []);
-  const addProduct = (productId) => {
-    setCartProducts((prev) => [...prev, productId]);
+
+  const addProduct = (productId, prop, image, price) => {
+    setCartProducts((prev) => [...prev, { productId, prop, image, price }]);
   };
 
-  const addProp = (prop) => {
-    setCartProp((prev) => [prop]);
-  };
   const removeProduct = (productId) => {
-    setCartProducts((prev) => {
-      const pos = prev.indexOf(productId);
-      if (pos !== -1) {
-        return prev.filter((value, index) => index !== pos);
-      }
-      return prev;
-    });
+    if (cartProducts?.length > 1) {
+      setCartProducts((prev) => {
+        if (productId !== -1) {
+          return prev.toSpliced(productId, 1);
+        }
+        return prev;
+      });
+    } else
+      setCartProducts((prev) => {
+        if (productId !== -1) {
+          clearCart();
+          return prev.toSpliced(productId, 1);
+        }
+        return prev;
+      });
   };
+
   const clearCart = () => {
     window.localStorage.clear();
   };
@@ -54,8 +50,6 @@ export function CartContextProvider({ children }) {
         addProduct,
         removeProduct,
         clearCart,
-        cartProp,
-        addProp,
       }}
     >
       {children}

@@ -5,16 +5,10 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CartContext } from "@/context/CartContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faMinus,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export default function CartPage() {
-  const { cartProducts, addProduct, removeProduct, clearCart, cartProp } =
-    useContext(CartContext);
-
+  const { cartProducts, removeProduct, clearCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,9 +17,12 @@ export default function CartPage() {
   const [streetAddress, setStreetAddress] = useState("");
   const [country, setCountry] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const ids = cartProducts.map((p) => p.productId);
+  const cartProp = cartProducts.map((p) => p.prop);
+  const prices = cartProducts.map((p) => p.price);
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post("/api/orders", { ids: cartProducts }).then((response) => {
+      axios.post("/api/orders", { ids: ids }).then((response) => {
         setProducts(response.data);
       });
     } else {
@@ -42,9 +39,7 @@ export default function CartPage() {
       clearCart();
     }
   }, []);
-  const moreOfThisProduct = (id) => {
-    addProduct(id);
-  };
+
   const lessOfThisProduct = (id) => {
     removeProduct(id);
   };
@@ -56,18 +51,23 @@ export default function CartPage() {
       postalCode,
       streetAddress,
       country,
+      ids,
       cartProp,
-      cartProducts,
+      total,
     });
     if (response.data.url) {
       window.location = response.data.url;
     }
   };
+
   let total = 0;
-  for (const productId of cartProducts) {
-    const price = products.find((p) => p._id === productId)?.price || 0;
-    total += price;
+  for (const price of prices) {
+    total = total + parseInt(price.replace(/\./g, ""));
   }
+  let count = {};
+  cartProp.forEach((element) => {
+    count[element] = (count[element] || 0) + 1;
+  });
 
   if (isSuccess) {
     return (
@@ -91,9 +91,7 @@ export default function CartPage() {
         <div className="flex flex-row justify-between max-[1024px]:flex-col">
           <div className="mt-20 mx-10 mb-10 p-5 bg-white rounded-xl">
             <h2 className="font-title text-[40px] font-bold">Giỏ hàng</h2>
-            {!cartProducts?.length && (
-              <div>Không có đơn hàng nào cần thanh toán</div>
-            )}
+            {!ids?.length && <div>Không có đơn hàng nào cần thanh toán</div>}
 
             {products?.length > 0 && (
               <table>
@@ -102,9 +100,7 @@ export default function CartPage() {
                     <th className="text-left text-[20px] text-gray-400">
                       Sản phẩm
                     </th>
-                    <th className="text-left text-[20px] pl-10 pr-10 text-gray-400">
-                      Số lượng
-                    </th>
+                    <th className="text-left text-[20px] pl-10 pr-10 text-gray-400"></th>
                     <th className="text-left text-[20px] pl-10 pr-10 text-gray-400">
                       Loại
                     </th>
@@ -114,45 +110,39 @@ export default function CartPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product) => (
-                    <tr key={product._id}>
+                  {cartProducts.map((product, index) => (
+                    <tr key={index}>
                       <td className="border-t-2 border-solid border-gray-400">
                         <div className="h-[250px] flex items-center justify-center">
                           <img
-                            src={product.images[0]}
+                            src={product.image}
                             alt="image-cart"
                             className="h-[240px] w-[100%] "
                           />
                         </div>
-                        {product.title}
                       </td>
                       <td className="border-t-2 border-solid border-gray-400 text-center pl-10 pr-10">
                         <button
-                          className="bg-gray-300 p-3 rounded-lg text-[20px] w-10 mb-2"
-                          onClick={() => moreOfThisProduct(product._id)}
-                        >
-                          <FontAwesomeIcon icon={faPlus} />
-                        </button>
-                        <div className="text-[20px]">
-                          {
-                            cartProducts.filter((id) => id === product._id)
-                              .length
-                          }
-                        </div>
-                        <button
                           className="bg-gray-300 p-3 rounded-lg text-[20px] w-10 mt-2"
-                          onClick={() => lessOfThisProduct(product._id)}
+                          onClick={() => lessOfThisProduct(index)}
                         >
                           <FontAwesomeIcon icon={faMinus} />
                         </button>
                       </td>
-                      <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-10 pr-10">
-                        {cartProp}
+                      <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-2 pr-2 ">
+                        <div className="flex flex-row justify-between">
+                          <div className="flex flex-col">{product.prop}</div>
+                        </div>
                       </td>
                       <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-10 pr-10">
-                        {cartProducts.filter((id) => id === product._id)
-                          .length * product.price}{" "}
-                        VND
+                        {/* {product.discount
+                          ? ids.filter((id) => id === product._id).length *
+                            (product.price -
+                              (product.price * product.discount) / 100)
+                          : ids.filter((id) => id === product._id).length *
+                            product.price} */}
+                        {product.price}
+                        <span>&#8363;</span>
                       </td>
                     </tr>
                   ))}
@@ -161,14 +151,17 @@ export default function CartPage() {
                     <td className="border-t-2 border-solid border-gray-400"></td>
                     <td className="border-t-2 border-solid border-gray-400"></td>
                     <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-10 pr-10">
-                      {total} VND
+                      {total
+                        .toString()
+                        .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
+                      <span>&#8363;</span>
                     </td>
                   </tr>
                 </tbody>
               </table>
             )}
           </div>
-          {!!cartProducts?.length && (
+          {!!ids?.length && (
             <div className="mt-20 mx-10 mb-10 p-5 bg-white rounded-xl flex flex-col">
               <h2 className="font-title text-[40px] font-bold">
                 Thông tin đơn hàng
