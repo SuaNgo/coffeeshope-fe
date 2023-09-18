@@ -71,7 +71,7 @@ const Navbar = () => {
                 Cà phê
               </span>
             </Link>
-            <Link
+            {/* <Link
               href="/mayphacaphe"
               className={
                 pathname == "/mayphacaphe" ? `${activeLink}` : `${unactiveLink}`
@@ -81,7 +81,7 @@ const Navbar = () => {
               <span className="text-[20px] leading-5 max-[1024px]:ml-2 font-welcome">
                 Máy pha cà phê
               </span>
-            </Link>
+            </Link> */}
             <Link
               href="/douong"
               className={

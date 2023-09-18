@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "@/components";
+import { Footer, Header } from "@/components";
 import AllProducts from "@/components/AllProducts";
 import SingleProduct from "@/components/SingleProduct";
 import axios from "axios";
@@ -31,6 +31,7 @@ const singleProductPage = ({ params }) => {
 
       {productInfo && <SingleProduct {...productInfo} />}
       <AllProducts products={productDatas} />
+      <Footer />
     </main>
   );
 };

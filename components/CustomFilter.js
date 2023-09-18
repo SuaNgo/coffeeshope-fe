@@ -4,30 +4,30 @@ import axios from "axios";
 import { useState } from "react";
 
 const CustomFilter = ({ setProductDatas, filter, id, data }) => {
-  const [selected, setSelected] = useState(null);
+  // const [selected, setSelected] = useState(null);
   const [sort, setSort] = useState(null);
-  const propArr = filter
-    ?.map((f) => f.split(","))
-    .join(",")
-    .split(",");
-  const handleChange = (index, e, id) => {
-    setSelected((prev) => (index === prev ? null : index));
-    if (selected !== index) {
-      axios
-        .get("/api/products?idCat=" + id + "&idFilter=" + e)
-        .then((response) => response.data)
-        .then((data) => {
-          setProductDatas(data);
-        });
-    } else {
-      axios
-        .get("/api/products?idCat=" + id)
-        .then((response) => response.data)
-        .then((data) => {
-          setProductDatas(data);
-        });
-    }
-  };
+  // const propArr = filter
+  //   ?.map((f) => f.split(","))
+  //   .join(",")
+  //   .split(",");
+  // const handleChange = (index, e, id) => {
+  //   setSelected((prev) => (index === prev ? null : index));
+  //   if (selected !== index) {
+  //     axios
+  //       .get("/api/products?idCat=" + id + "&idFilter=" + e)
+  //       .then((response) => response.data)
+  //       .then((data) => {
+  //         setProductDatas(data);
+  //       });
+  //   } else {
+  //     axios
+  //       .get("/api/products?idCat=" + id)
+  //       .then((response) => response.data)
+  //       .then((data) => {
+  //         setProductDatas(data);
+  //       });
+  //   }
+  // };
   const handleSort = (index, e, id) => {
     setSort((prev) => (index === prev ? null : index));
     if (sort !== index) {
@@ -60,7 +60,7 @@ const CustomFilter = ({ setProductDatas, filter, id, data }) => {
 
   return (
     <form className="flex flex-col col-span-1 ml-8 text-[16px]">
-      <h1 className="text-[20px]">Kiểu dáng</h1>
+      {/* <h1 className="text-[20px]">Kiểu dáng</h1>
       {propArr?.map((f, index) => (
         <>
           <label
@@ -79,7 +79,7 @@ const CustomFilter = ({ setProductDatas, filter, id, data }) => {
             </div>
           </label>
         </>
-      ))}
+      ))} */}
       <h1 className="text-[20px]">Giá</h1>
       <label className="flex flex-row items-baseline justify-between">
         <div className="flex flex-row items-baseline gap-3">

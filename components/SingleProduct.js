@@ -9,6 +9,7 @@ const SingleProduct = ({
   _id,
   product,
   category,
+  properties,
   images,
   description,
   price,
@@ -16,24 +17,20 @@ const SingleProduct = ({
 }) => {
   const { addProduct } = useContext(CartContext);
   const [activeImage, setActiveImage] = useState(images?.[0]);
-  const [categoryInfo, setCategoryInfo] = useState(null);
   const [activeChoice, setActiveChoice] = useState(null);
   const [evaluate, setEvaluate] = useState(null);
   const [changePrice, setChangePrice] = useState(1);
-  const productProp = categoryInfo?.properties[1]?.values?.split(",");
-  useEffect(() => {
-    axios.get("/api/categories?id=" + category).then((response) => {
-      setCategoryInfo(response.data);
-    });
-  }, []);
+  const productProp = properties?.split(",");
 
   useEffect(() => {
     if (evaluate) {
       const intEvaluate = parseFloat(evaluate);
-      if (intEvaluate >= 600) {
-        setChangePrice((intEvaluate / 600).toFixed(2));
-      } else if (intEvaluate < 600) {
+      if (intEvaluate > 1) {
+        setChangePrice((intEvaluate / 30).toFixed(2));
+      } else if (100 <= intEvaluate < 600) {
         setChangePrice((intEvaluate / 100).toFixed(2));
+      } else if (evaluate === "S") {
+        setChangePrice(1);
       } else if (evaluate === "M") {
         setChangePrice(1.2);
       } else if (evaluate === "XL") {
@@ -81,7 +78,7 @@ const SingleProduct = ({
             {product}
           </span>
           <div className="my-4 flex flex-row">
-            {discount && (
+            {discount !== 0 && discount && (
               <span className="text-[28px] text-red-600 font-title font-semibold ">
                 {((price - (price * discount) / 100) * changePrice)
                   .toString()
@@ -104,9 +101,6 @@ const SingleProduct = ({
             </span>
           </div>
           <div>
-            <h1 className="text-[20px] font-title font-semibold my-4 ">
-              {categoryInfo?.properties[1]?.name}
-            </h1>
             <div>
               {productProp?.map((w, index) => (
                 <button

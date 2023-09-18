@@ -29,6 +29,7 @@ const ProductPage = () => {
       <div className="mt-12">
         <AllProducts products={productDatas} />
       </div>
+      <Footer />
     </main>
   );
 };

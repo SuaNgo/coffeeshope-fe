@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "@/components";
+import { Footer, Header } from "@/components";
 import SingleProduct from "@/components/SingleProduct";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ const singleProductPage = ({ params }) => {
       <Header />
 
       {productInfo && <SingleProduct {...productInfo} />}
+      <Footer />
     </main>
   );
 };

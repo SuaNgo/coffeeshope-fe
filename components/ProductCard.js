@@ -8,7 +8,7 @@ const ProductCard = ({ _id, product, price, images, discount }) => {
 
   return (
     <div className=" mx-8 rounded-xl border-2 border-solid shadow-new relative">
-      {discount && (
+      {discount !== 0 && discount && (
         <div className="bg-red-500 p-1 w-fit mt-4 absolute">
           {discount} <FontAwesomeIcon icon={faPercent} />
         </div>
@@ -37,7 +37,7 @@ const ProductCard = ({ _id, product, price, images, discount }) => {
               {price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
               <span>&#8363;</span>
             </span>
-            {discount && (
+            {discount !== 0 && discount && (
               <span className="text-[20px] font-title font-bold">
                 {(price - (price * discount) / 100)
                   .toString()

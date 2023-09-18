@@ -6,6 +6,7 @@ import axios from "axios";
 import { CartContext } from "@/context/CartContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { Footer } from "@/components";
 
 export default function CartPage() {
   const { cartProducts, removeProduct, clearCart } = useContext(CartContext);
@@ -227,6 +228,7 @@ export default function CartPage() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

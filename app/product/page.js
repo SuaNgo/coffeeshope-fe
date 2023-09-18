@@ -19,15 +19,15 @@ const ProductPage = () => {
       .get("/api/products?idCat=" + idCat)
       .then((response) => setProductDatas(response.data));
   }, []);
-  useEffect(() => {
-    axios
-      .get("/api/categories?id=" + idCat)
-      .then((response) => response.data)
-      .then((data) => {
-        const props = data.properties.map((p) => p.values);
-        setFilter(props);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/categories?id=" + idCat)
+  //     .then((response) => response.data)
+  //     .then((data) => {
+  //       const props = data.properties.map((p) => p.values);
+  //       setFilter(props);
+  //     });
+  // }, []);
 
   return (
     <main className="">
@@ -37,12 +37,13 @@ const ProductPage = () => {
       <div className="grid grid-cols-6 mt-12">
         <CustomFilter
           setProductDatas={setProductDatas}
-          filter={filter}
+          // filter={filter}
           id={idCat}
           data="caphe"
         />
         <CatProducts products={productDatas} />
       </div>
+      <Footer />
     </main>
   );
 };
