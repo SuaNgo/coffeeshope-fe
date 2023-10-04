@@ -9,13 +9,13 @@ const ProductCard = ({ _id, product, price, images, discount }) => {
   return (
     <div className=" mx-8 rounded-xl border-2 border-solid shadow-new relative">
       {discount !== 0 && discount && (
-        <div className="bg-red-500 p-1 w-fit mt-4 absolute">
+        <div className="bg-red-500 p-1 w-fit right-0 mt-4 absolute">
           {discount} <FontAwesomeIcon icon={faPercent} />
         </div>
       )}
 
       <a href={url}>
-        <div className="h-[250px] flex items-center justify-center p-5">
+        <div className="h-[250px] flex items-center justify-center">
           <img
             src={images?.[0]}
             alt="product-image"

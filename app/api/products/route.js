@@ -16,7 +16,7 @@ export async function GET(request) {
     const sort = Number(url.searchParams.get("idSort"));
 
     if (sort < 1000000) {
-      const max = sort + 150000;
+      const max = sort + 250000;
 
       return NextResponse.json(
         await Product.find({
@@ -26,59 +26,7 @@ export async function GET(request) {
           ],
         })
       );
-    } else {
-      const max = sort + 1500000;
-      return NextResponse.json(
-        await Product.find({
-          $and: [
-            { category: url.searchParams.get("idCat") },
-            { price: { $gte: sort, $lte: max } },
-          ],
-        })
-      );
     }
-  } else if (url.searchParams.has("idFilter", "idCat")) {
-    const filter = url.searchParams.get("idFilter");
-    if (filter.includes("Brand"))
-      return NextResponse.json(
-        await Product.find({
-          $and: [
-            { category: url.searchParams.get("idCat") },
-            { "properties.Hãng": filter },
-          ],
-        })
-      );
-    else if (filter.includes("ml"))
-      return NextResponse.json(
-        await Product.find({
-          $and: [
-            { category: url.searchParams.get("idCat") },
-            { "properties.Dung tích": filter },
-          ],
-        })
-      );
-    else if (filter.includes("g"))
-      return NextResponse.json(
-        await Product.find({
-          $and: [
-            { category: url.searchParams.get("idCat") },
-            { "properties.Khối lượng": filter },
-          ],
-        })
-      );
-    else if (
-      filter.includes("Đen") ||
-      filter.includes("Đỏ") ||
-      filter.includes("Xám")
-    )
-      return NextResponse.json(
-        await Product.find({
-          $and: [
-            { category: url.searchParams.get("idCat") },
-            { "properties.Màu": filter },
-          ],
-        })
-      );
   } else if (url.searchParams.get("idCat")) {
     return NextResponse.json(
       await Product.find({ category: url.searchParams.get("idCat") })

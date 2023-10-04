@@ -23,7 +23,7 @@ const Navbar = () => {
   const hideButton =
     "fixed bg-white text-[30px] top-4 right-4 shadow-xl rounded-full border py-1 px-4 min-[1025px]:hidden";
   const showButton =
-    "fixed bg-white text-[30px] top-4 left-4 shadow-xl rounded-full border py-2 px-4 min-[1025px]:hidden";
+    "fixed bg-white text-[30px] z-50 top-4 left-4 shadow-xl rounded-full border py-2 px-4 min-[1025px]:hidden";
   const cssHideNav =
     "max-[1024px]:w-0 max-[1024px]:z-10 max-[1024px]:overflow-x-hidden max-[1024px]:top-0 max-[1024px]:p-0  bg-white  text-[28px] shadow flex justify-between max-[1024px]:flex-col max-[1024px]:fixed fixed z-40 w-full top-0 overflow-hidden min-[1025px]:items-center";
   const cssShowNav =
@@ -71,17 +71,6 @@ const Navbar = () => {
                 Cà phê
               </span>
             </Link>
-            {/* <Link
-              href="/mayphacaphe"
-              className={
-                pathname == "/mayphacaphe" ? `${activeLink}` : `${unactiveLink}`
-              }
-            >
-              {flexNav && <FontAwesomeIcon icon={faMugHot} />}
-              <span className="text-[20px] leading-5 max-[1024px]:ml-2 font-welcome">
-                Máy pha cà phê
-              </span>
-            </Link> */}
             <Link
               href="/douong"
               className={

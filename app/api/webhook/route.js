@@ -44,7 +44,3 @@ export async function POST(request) {
     { status: 200 }
   );
 }
-
-//acct_1Ng6w8LcWdiXfbXA
-//jovial-rapt-warm-gentle
-// ("whsec_fc254baac96a96b5e27b8391b9b269e5ffbf8270c4e9998a5c734a75a91396ff");

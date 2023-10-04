@@ -8,7 +8,7 @@ const Footer = () => {
     <footer>
       <div className="h-full bg-gray-900 mt-20 pb-20">
         <div className="grid pt-10 px-24">
-          <div className="grid grid-cols-4">
+          <div className="grid grid-cols-4 max-[425px]:grid-cols-1 max-[1024px]:grid-cols-2 gap-4">
             <div className="flex flex-col text-white font-title">
               <h1 className="font-bold mb-10 text-[16px]">Giới thiệu</h1>
               <Link className="text-[14px]" href="/">
@@ -37,9 +37,12 @@ const Footer = () => {
                 Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội
               </p>
             </div>
-            <div className="flex flex-col text-white font-title font-bold text-[20px]">
-              <div className="relative w-[270px]">
-                <img src="/dhbkhn.jpg" className="" />
+            <div className="flex flex-col text-white font-title font-bold text-[20px] ">
+              <div className="relative">
+                <img
+                  src="/dhbkhn.jpg"
+                  className="w-full object-cover h-[200px]"
+                />
                 <div className="absolute top-4 left-4">
                   <a href="https://hust.edu.vn/" className="flex">
                     <img

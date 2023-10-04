@@ -2,7 +2,6 @@
 import { CartContext } from "@/context/CartContextProvider";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 
 const SingleProduct = ({
@@ -25,9 +24,10 @@ const SingleProduct = ({
   useEffect(() => {
     if (evaluate) {
       const intEvaluate = parseFloat(evaluate);
-      if (intEvaluate > 1) {
+      console.log(intEvaluate);
+      if (intEvaluate < 100 && intEvaluate > 1) {
         setChangePrice((intEvaluate / 30).toFixed(2));
-      } else if (100 <= intEvaluate < 600) {
+      } else if (intEvaluate < 600 && intEvaluate >= 100) {
         setChangePrice((intEvaluate / 100).toFixed(2));
       } else if (evaluate === "S") {
         setChangePrice(1);
@@ -53,7 +53,7 @@ const SingleProduct = ({
   return (
     <div className="my-0 mx-20 pt-20 max-[1024px]:pt-10 pb-0 px-5">
       <div className="grid grid-cols-2 max-[768px]:grid-cols-1 gap-10">
-        <div className="bg-white rounded-xl p-8 mb-10">
+        <div className="bg-white rounded-xl p-8 mb-10 max-[425px]:p-0 max-[425px]:mb-0">
           <div className="">
             <img className="max-w-full max-h-full" src={activeImage} />
           </div>
@@ -126,7 +126,7 @@ const SingleProduct = ({
             <button
               className="text-[20px] bg-blue-400 rounded-lg font-medium text-white p-2"
               onClick={() => {
-                addProduct(_id, activeChoice, images?.[0], newPrice);
+                addProduct(_id, product, activeChoice, images?.[0], newPrice);
               }}
             >
               <FontAwesomeIcon icon={faCartShopping} />

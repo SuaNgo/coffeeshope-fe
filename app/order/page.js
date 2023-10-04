@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CartContext } from "@/context/CartContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faMinus, faX } from "@fortawesome/free-solid-svg-icons";
 import { Footer } from "@/components";
 
 export default function CartPage() {
@@ -88,87 +88,73 @@ export default function CartPage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen max-h-full bg-slate-200">
+      <div className="min-h-screen max-h-full">
         <div className="flex flex-row justify-between max-[1024px]:flex-col">
-          <div className="mt-20 mx-10 mb-10 p-5 bg-white rounded-xl">
+          <div className="mt-20 mx-10 mb-10 p-5 bg-white rounded-xl border-solid shadow-new">
             <h2 className="font-title text-[40px] font-bold">Giỏ hàng</h2>
             {!ids?.length && <div>Không có đơn hàng nào cần thanh toán</div>}
 
             {products?.length > 0 && (
-              <table>
-                <thead>
-                  <tr>
-                    <th className="text-left text-[20px] text-gray-400">
-                      Sản phẩm
-                    </th>
-                    <th className="text-left text-[20px] pl-10 pr-10 text-gray-400"></th>
-                    <th className="text-left text-[20px] pl-10 pr-10 text-gray-400">
-                      Loại
-                    </th>
-                    <th className="text-left text-[20px] pl-10 pr-10 text-gray-400">
-                      Đơn giá
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartProducts.map((product, index) => (
-                    <tr key={index}>
-                      <td className="border-t-2 border-solid border-gray-400">
-                        <div className="h-[250px] flex items-center justify-center">
-                          <img
-                            src={product.image}
-                            alt="image-cart"
-                            className="h-[240px] w-[100%] "
-                          />
-                        </div>
-                      </td>
-                      <td className="border-t-2 border-solid border-gray-400 text-center pl-10 pr-10">
-                        <button
-                          className="bg-gray-300 p-3 rounded-lg text-[20px] w-10 mt-2"
-                          onClick={() => lessOfThisProduct(index)}
-                        >
-                          <FontAwesomeIcon icon={faMinus} />
-                        </button>
-                      </td>
-                      <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-2 pr-2 ">
-                        <div className="flex flex-row justify-between">
-                          <div className="flex flex-col">{product.prop}</div>
-                        </div>
-                      </td>
-                      <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-10 pr-10">
-                        {/* {product.discount
-                          ? ids.filter((id) => id === product._id).length *
-                            (product.price -
-                              (product.price * product.discount) / 100)
-                          : ids.filter((id) => id === product._id).length *
-                            product.price} */}
+              <div className="grid">
+                {cartProducts.map((product, index) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-3 max-[425px]:flex max-[425px]:flex-col"
+                  >
+                    <div className="border-t-2 border-solid border-gray-400">
+                      <div className="h-[300px] flex flex-col items-center justify-center ">
+                        <h1 className="font-title text-[20px] font-bold">
+                          {product.product}
+                        </h1>
+                        <img
+                          src={product.image}
+                          alt="image-cart"
+                          className="h-[240px] w-[100%] "
+                        />
+                      </div>
+                    </div>
+
+                    <div className="border-t-2 border-solid border-gray-400 text-[20px] pl-2 pr-2 ">
+                      <div className="flex flex-row justify-between">
+                        <div className="flex flex-col">{product.prop}</div>
+                      </div>
+                    </div>
+                    <div className="border-t-2 border-solid border-gray-400 text-[20px] px-10 max-[768px]:px-0 flex flex-row justify-between items-center">
+                      <p className="leading-8 h-8">
                         {product.price}
                         <span>&#8363;</span>
-                      </td>
-                    </tr>
-                  ))}
-                  <tr>
-                    <td className="border-t-2 border-solid border-gray-400"></td>
-                    <td className="border-t-2 border-solid border-gray-400"></td>
-                    <td className="border-t-2 border-solid border-gray-400"></td>
-                    <td className="border-t-2 border-solid border-gray-400 text-[20px] pl-10 pr-10">
-                      {total
-                        .toString()
-                        .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
-                      <span>&#8363;</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      </p>
+                      <button
+                        className="bg-gray-300 rounded-lg text-[20px] w-10 h-10"
+                        onClick={() => lessOfThisProduct(index)}
+                      >
+                        <FontAwesomeIcon icon={faX} />
+                      </button>
+                    </div>
+                    <div className="border-t-2 border-solid border-gray-400 text-center px-10 max-[768px]:px-0"></div>
+                  </div>
+                ))}
+                <div className="grid grid-cols-3">
+                  <div className="border-t-2 border-solid border-gray-400"></div>
+                  <div className="border-t-2 border-solid border-gray-400"></div>
+
+                  <div className="border-t-2 border-solid border-gray-400 text-[20px] px-10 max-[768px]:px-0">
+                    {total
+                      .toString()
+                      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
+                    <span>&#8363;</span>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           {!!ids?.length && (
-            <div className="mt-20 mx-10 mb-10 p-5 bg-white rounded-xl flex flex-col">
+            <div className="mt-20 mx-10 mb-10 p-5 bg-white rounded-xl flex flex-col border-solid shadow-new">
               <h2 className="font-title text-[40px] font-bold">
                 Thông tin đơn hàng
               </h2>
               <input
-                className="text-[20px] font-title my-4"
+                className="text-[20px] font-title my-4 rounded-3xl border-none bg-slate-200"
                 type="text"
                 placeholder="Tên khách hàng"
                 value={name}
@@ -176,7 +162,7 @@ export default function CartPage() {
                 onChange={(ev) => setName(ev.target.value)}
               />
               <input
-                className="text-[20px] font-title my-4"
+                className="text-[20px] font-title my-4 rounded-3xl border-none bg-slate-200"
                 type="text"
                 placeholder="Email"
                 value={email}
@@ -185,7 +171,7 @@ export default function CartPage() {
               />
 
               <input
-                className="text-[20px] font-title my-4"
+                className="text-[20px] font-title my-4 rounded-3xl border-none bg-slate-200"
                 type="text"
                 placeholder="Thành phố"
                 value={city}
@@ -193,7 +179,7 @@ export default function CartPage() {
                 onChange={(ev) => setCity(ev.target.value)}
               />
               <input
-                className="text-[20px] font-title my-4"
+                className="text-[20px] font-title my-4 rounded-3xl border-none bg-slate-200"
                 type="text"
                 placeholder="Mã bưu chính"
                 value={postalCode}
@@ -202,7 +188,7 @@ export default function CartPage() {
               />
 
               <input
-                className="text-[20px] font-title my-4"
+                className="text-[20px] font-title my-4 rounded-3xl border-none bg-slate-200"
                 type="text"
                 placeholder="Địa chỉ"
                 value={streetAddress}
@@ -210,7 +196,7 @@ export default function CartPage() {
                 onChange={(ev) => setStreetAddress(ev.target.value)}
               />
               <input
-                className="text-[20px] font-title my-4"
+                className="text-[20px] font-title my-4 rounded-3xl border-none bg-slate-200"
                 type="text"
                 placeholder="Quốc gia"
                 value={country}

@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 
 const ProductPage = () => {
   const [productDatas, setProductDatas] = useState([]);
-  const [filter, setFilter] = useState([]);
   const idCat = "64f3485e347e9326423be33c";
 
   const page = "/api/products?idCat=";
@@ -34,10 +33,9 @@ const ProductPage = () => {
       <Header />
       <Landing />
       <SearchBar setProductDatas={setProductDatas} page={page} id={idCat} />
-      <div className="grid grid-cols-6 mt-12">
+      <div className="grid grid-cols-6 mt-12 max-[425px]:flex max-[425px]:flex-col ">
         <CustomFilter
           setProductDatas={setProductDatas}
-          // filter={filter}
           id={idCat}
           data="caphe"
         />

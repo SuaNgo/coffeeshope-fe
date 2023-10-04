@@ -17,8 +17,11 @@ export function CartContextProvider({ children }) {
     }
   }, []);
 
-  const addProduct = (productId, prop, image, price) => {
-    setCartProducts((prev) => [...prev, { productId, prop, image, price }]);
+  const addProduct = (productId, product, prop, image, price) => {
+    setCartProducts((prev) => [
+      ...prev,
+      { productId, product, prop, image, price },
+    ]);
   };
 
   const removeProduct = (productId) => {

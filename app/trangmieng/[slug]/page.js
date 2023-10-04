@@ -19,7 +19,7 @@ const singleProductPage = ({ params }) => {
   }, [slug]);
 
   return (
-    <main className="bg-slate-200 h-full">
+    <main className="h-full">
       <Header />
 
       {productInfo && <SingleProduct {...productInfo} />}

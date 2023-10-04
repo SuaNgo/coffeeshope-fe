@@ -30,7 +30,7 @@ const SearchBar = ({ setProductDatas, page, id }) => {
     <div className="ml-8">
       <h1 className="text-[30px] font-title mb-2">Tìm kiếm sản phẩm</h1>
       <input
-        className="p-4 border-2 solid w-[400px] rounded-full bg-transparent  focus:outline-none focus:ring-0"
+        className="p-4 border-2 solid w-[400px] max-[425px]:w-full rounded-full bg-transparent  focus:outline-none focus:ring-0"
         placeholder="Type to search..."
         value={input}
         onChange={(e) => handleChange(e.target.value)}
