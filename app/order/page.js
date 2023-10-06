@@ -114,10 +114,8 @@ export default function CartPage() {
                       </div>
                     </div>
 
-                    <div className="border-t-2 border-solid border-gray-400 text-[20px] pl-2 pr-2 ">
-                      <div className="flex flex-row justify-between">
-                        <div className="flex flex-col">{product.prop}</div>
-                      </div>
+                    <div className="border-t-2 border-solid border-gray-400 text-[20px] px-2 max-[768px]:px-0 flex flex-row items-center justify-center">
+                      <p className="leading-8 h-8">{product.prop}</p>
                     </div>
                     <div className="border-t-2 border-solid border-gray-400 text-[20px] px-10 max-[768px]:px-0 flex flex-row justify-between items-center">
                       <p className="leading-8 h-8">

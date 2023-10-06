@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <main className="">
       <Header />
-      <Landing />
+      {/* <Landing /> */}
       <Carousel images={images} />
       <Content
         products={productDatas}

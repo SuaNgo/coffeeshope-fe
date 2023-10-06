@@ -20,12 +20,11 @@ const Carousel = ({ images }) => {
       x: "0",
       opacity: 1,
       transition: {
-        duration: 1,
+        duration: 0.5,
       },
     },
     exit: {
       opacity: 0,
-      scale: 0.8,
       transition: {
         duration: 0.5,
       },
@@ -72,7 +71,7 @@ const Carousel = ({ images }) => {
   };
 
   return (
-    <div className="carousel">
+    <div className="carousel mt-20">
       <div className="carousel-images">
         <AnimatePresence>
           <motion.img
